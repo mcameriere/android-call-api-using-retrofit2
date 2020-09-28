@@ -20,3 +20,54 @@
         implementation 'com.squareup.retrofit2:retrofit:2.5.0'
         implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     }
+
+## MainActivity.java
+
+```java
+package com.example.callapi;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class MainActivity extends AppCompatActivity {
+    private ListView listView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        listView = findViewById(R.id.listView);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://my-web-site.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        IntenseTundraService service = retrofit.create(IntenseTundraService.class);
+
+        service.listPlayers().enqueue(new Callback&lt;List&lt;Player&gt;&gt;() {
+
+            @Override
+            public void onResponse(Call&lt;List&lt;Player&gt;&gt; call, Response&lt;List&lt;Player&gt;&gt; response) {
+                ArrayAdapter&lt;Player&gt; adapter = new ArrayAdapter&lt;&gt;(
+                        MainActivity.this,
+                        android.R.layout.simple_list_item_1,
+                        response.body()
+                );
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call&lt;List&lt;Player&gt;&gt; call, Throwable t) {
+            }
+
+        });
+    }
+}
+```
