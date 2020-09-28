@@ -25,6 +25,8 @@
 
 ## IntenseTundraService.java
 
+## activity_main.xml
+
 ## MainActivity.java
 
 ```java
