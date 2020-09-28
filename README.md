@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
         IntenseTundraService service = retrofit.create(IntenseTundraService.class);
 
-        service.listPlayers().enqueue(new Callback&lt;List&lt;Player&gt;&gt;() {
+        service.listPlayers().enqueue(new Callback<List<Player>>() {
 
             @Override
-            public void onResponse(Call&lt;List&lt;Player&gt;&gt; call, Response&lt;List&lt;Player&gt;&gt; response) {
-                ArrayAdapter&lt;Player&gt; adapter = new ArrayAdapter&lt;&gt;(
+            public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
+                ArrayAdapter<Player> adapter = new ArrayAdapter<>(
                         MainActivity.this,
                         android.R.layout.simple_list_item_1,
                         response.body()
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call&lt;List&lt;Player&gt;&gt; call, Throwable t) {
+            public void onFailure(Call<List<Player>> call, Throwable t) {
             }
 
         });
